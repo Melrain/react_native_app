@@ -4,5 +4,5 @@
     "strict": true,
  
   },
-  "include": ["app/**/*", "types/images.d.ts"],
+  "include": ["app/**/*", "types/images.d.ts", "nativewind-env.d.ts"],
 }

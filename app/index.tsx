@@ -1,11 +1,20 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, ScrollView, Text, View } from 'react-native';
 import React from 'react';
+import { Link } from 'expo-router';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { images } from '../constants';
 
 const index = () => {
   return (
-    <View className='flex-1 justify-center items-center'>
-      <Text>index</Text>
-    </View>
+    <SafeAreaView className='bg-primary h-full '>
+      <ScrollView contentContainerStyle={{ height: '100%' }}>
+        <View className='w-full justify-center items-center h-full px-4'>
+          <Image source={images.logo} className='w-[130px] h-[84px]' resizeMode='contain' />
+
+          <Image source={images.cards} resizeMode='contain' className='max-w-[380px] w-full h-[300px]' />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

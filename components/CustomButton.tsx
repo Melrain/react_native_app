@@ -4,7 +4,7 @@ import React from 'react';
 interface CustomButtonProps {
   title: string;
   handlePress: () => void;
-  containerStyles?: object;
+  containerStyles?: string;
   textStyles?: object;
   isLoading?: boolean;
 }
@@ -14,12 +14,12 @@ const CustomButton = ({ title, handlePress, containerStyles, textStyles, isLoadi
     <TouchableOpacity
       onPress={handlePress}
       activeOpacity={0.7}
-      className={`bg-secondary rounded-xl min-h-[62px] flex flex-row justify-center items-center ${containerStyles} ${
+      className={`bg-secondary  rounded-xl min-h-[62px] flex flex-row justify-center items-center ${containerStyles} ${
         isLoading ? 'opacity-50' : ''
       }`}
       disabled={isLoading}
     >
-      <Text className={`text-primary font-psemibold ${textStyles}`}>{title}</Text>
+      <Text className={`text-primary text-lg font-psemibold ${textStyles}`}>{title}</Text>
     </TouchableOpacity>
   );
 };

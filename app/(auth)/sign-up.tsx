@@ -1,10 +1,11 @@
-import { View, Text, ScrollView, Image } from 'react-native';
+import { View, Text, ScrollView, Image, Alert, Dimensions } from 'react-native';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '../../constants';
 import FormField from '../../components/FormField';
 import CustomButton from '../../components/CustomButton';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
+import { createUser } from '../../lib/appwrite';
 
 const SignUp = () => {
   const [form, setForm] = useState({
@@ -15,20 +16,38 @@ const SignUp = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const submit = () => {
-    console.log(form);
+  const submit = async () => {
+    if (!form.username || !form.email || !form.password) Alert.alert('Please fill in all fields');
+    try {
+      setIsSubmitting(true);
+      const result = await createUser({
+        username: form.username,
+        email: form.email,
+        password: form.password
+      });
+      router.replace('/home');
+    } catch (error: any) {
+      Alert.alert('Failed to create user', error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <SafeAreaView className='bg-primary h-full'>
       <ScrollView>
-        <View className='w-full justify-center min-h-[85vh] px-4 my-6'>
+        <View
+          className='w-full justify-center min-h-[85vh] px-4 my-6'
+          style={{
+            minHeight: Dimensions.get('window').height - 100
+          }}
+        >
           <Image source={images.logo} className='w-[115px] h-[35px]' resizeMode='contain' />
           <Text className='text-2xl text-white text-semibold mt-10 font-psemibold'>Sign Up to Aora</Text>
           <FormField
             title='Username'
             value={form.username}
-            handleChangeText={(e: any) => setForm({ ...form, email: e })}
+            handleChangeText={(e: any) => setForm({ ...form, username: e })}
             otherStyles='mt-7'
             keyboardType='username'
             placeholder={'username'}
